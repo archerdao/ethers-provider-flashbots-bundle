@@ -102,7 +102,7 @@ export interface GetUserStatsResponseSuccess {
 
 export type GetUserStatsResponse = GetUserStatsResponseSuccess | RelayResponseError
 
-type RpcParams = Array<string[] | string | number> | Record<string, unknown>
+type RpcParams = Array<string[] | string | number | Record<string, unknown>>
 
 const TIMEOUT_MS = 5 * 60 * 1000
 
@@ -164,14 +164,16 @@ export class FlashbotsBundleProvider extends providers.JsonRpcProvider {
     targetBlockNumber: number,
     opts?: FlashbotsOptions
   ): Promise<FlashbotsTransaction> {
-    const params = {
-      txs: signedBundledTransactions,
-      blockNumber: `0x${targetBlockNumber.toString(16)}`,
-      minTimestamp: opts?.minTimestamp || 0,
-      maxTimestamp: opts?.maxTimestamp || 0,
-      maxGas: '0x',
-      tailGas: '0x'
-    }
+    const params = [
+      {
+        txs: signedBundledTransactions,
+        blockNumber: `0x${targetBlockNumber.toString(16)}`,
+        minTimestamp: opts?.minTimestamp || 0,
+        maxTimestamp: opts?.maxTimestamp || 0,
+        maxGas: '0x',
+        tailGas: '0x'
+      }
+    ]
     const request = JSON.stringify(this.prepareBundleRequest('eth_sendBundle', params))
     const response = await this.request(request)
     if (response.error !== undefined) {
