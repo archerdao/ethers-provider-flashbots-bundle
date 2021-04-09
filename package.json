@@ -9,6 +9,7 @@
     "build": "npx tsc",
     "clean": "rm -rf build/",
     "prepare": "npm run clean && npm run build",
+    "postinstall": "tsc --outDir ./build",
     "lint": "npx eslint src"
   },
   "author": "",
