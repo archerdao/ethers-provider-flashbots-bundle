@@ -169,9 +169,7 @@ export class FlashbotsBundleProvider extends providers.JsonRpcProvider {
         txs: signedBundledTransactions,
         blockNumber: `0x${targetBlockNumber.toString(16)}`,
         minTimestamp: opts?.minTimestamp || 0,
-        maxTimestamp: opts?.maxTimestamp || 0,
-        maxGas: '0x',
-        tailGas: '0x'
+        maxTimestamp: opts?.maxTimestamp || 0
       }
     ]
     const request = JSON.stringify(this.prepareBundleRequest('eth_sendBundle', params))
