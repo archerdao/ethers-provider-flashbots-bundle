@@ -4,6 +4,7 @@ import { FlashbotsBundleProvider, FlashbotsBundleResolution } from './index'
 
 const ETHEREUM_RPC_URL = process.env.ETHEREUM_RPC_URL || 'http://127.0.0.1:8545'
 const FLASHBOTS_AUTH_KEY = process.env.FLASHBOTS_AUTH_KEY
+const ARCHER_RELAY_URL = 'https://api.archerdao.io/v1/bundle'
 
 const connection: ConnectionInfo = { url: ETHEREUM_RPC_URL }
 const NETWORK_INFO = { chainId: 1, ensAddress: '', name: 'mainnet' }
@@ -11,7 +12,7 @@ const provider = new providers.JsonRpcProvider(connection, NETWORK_INFO)
 
 provider.getBlockNumber().then(async (blockNumber) => {
   const authSigner = FLASHBOTS_AUTH_KEY ? new Wallet(FLASHBOTS_AUTH_KEY) : Wallet.createRandom()
-  const flashbotsProvider = await FlashbotsBundleProvider.create(provider, authSigner)
+  const flashbotsProvider = await FlashbotsBundleProvider.create(provider, authSigner, ARCHER_RELAY_URL)
 
   const wallet = Wallet.createRandom().connect(provider)
 
